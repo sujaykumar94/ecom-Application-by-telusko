@@ -2,6 +2,10 @@ package com.example.comproject.service;
 
 import com.example.comproject.entity.Product;
 import com.example.comproject.repo.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -10,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProductService {
 
     private final ProductRepository repo;
@@ -18,6 +23,7 @@ public class ProductService {
         this.repo = repo;
     }
 
+    @Cacheable(value = "productsCache", key = "'allProducts'")
     public List<Product> getAllProducts() {
         /*List<Product> productList = new ArrayList<>();
         for(int i=0;i<10;i++) {
@@ -33,7 +39,30 @@ public class ProductService {
         }
         repo.saveAllAndFlush(productList);*/
 
+        System.out.println("Inside getAllProducts method");
+
         return repo.findAll();
 
+    }
+
+
+    @CachePut(value = "productsCache", key = "#product.id")
+    public Product addProduct(Product product) {
+        System.out.println("Inside addProducts method");
+        return repo.saveAndFlush(product);
+
+    }
+
+
+    @CacheEvict(value = "productsCache", key = "#id")
+    public void deleteProduct(Integer id) {
+        log.info("Deleting product with id: {}", id);
+        repo.deleteById(id);
+    }
+
+    @Cacheable(value = "productsCache", key = "#id")
+    public Product getProductById(int id) {
+        log.info("Fetching product with id: {}", id);
+        return repo.findById(id).orElse(Product.builder().id(-1).prodName("Not Found").build());
     }
 }
