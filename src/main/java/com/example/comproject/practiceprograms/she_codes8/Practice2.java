@@ -39,3 +39,16 @@ public class Practice2 {
         103 -> John
         105 -> Bob
         */
+
+/*
+
+    Interview Questions
+    What is the internal data structure of TreeMap?
+        A Red-Black Tree.
+        Why is TreeMap slower than HashMap?
+        Because TreeMap maintains sorted order, operations take O(log n), while HashMap provides O(1) average-time lookups.
+        Can TreeMap have a null key?
+        No. It throws a NullPointerException.
+        When should you use TreeMap?
+        When you need data to remain sorted by key or need range and navigation operations such as firstKey(), lastKey(), higherKey(), lowerKey(), subMap(), headMap(), and tailMap().
+*/

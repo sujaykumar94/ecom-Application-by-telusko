@@ -7,7 +7,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,10 +49,12 @@ public class ProductService {
 
 
     @CachePut(value = "productsCache", key = "#product.id")
-    public Product addProduct(Product product) {
-        System.out.println("Inside addProducts method");
+    public Product addProduct(Product product, MultipartFile file) throws IOException {
+        log.info("Inside addProducts method");
+        product.setImageData(file.getBytes());
+        product.setImageName(file.getOriginalFilename());
+        product.setImageType(file.getContentType());
         return repo.saveAndFlush(product);
-
     }
 
 
@@ -65,4 +69,7 @@ public class ProductService {
         log.info("Fetching product with id: {}", id);
         return repo.findById(id).orElse(Product.builder().id(-1).prodName("Not Found").build());
     }
+
+
+
 }

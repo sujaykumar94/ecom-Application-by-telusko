@@ -36,5 +36,11 @@ public class Product implements Serializable  {
     private boolean available;
     private int quantity;
 
+    private String imageName;
+    private String imageType;
+
+    @Lob
+    private byte[] imageData;
+
 
 }
