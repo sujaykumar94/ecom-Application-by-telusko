@@ -25,3 +25,5 @@ https://chatgpt.com/s/p_6a591716937c81918168a21cfac5e7cb
 -  KEYS *          --displays all the keys/caches
 - GET productsCache::9      --To view the values in the key 9. Example: The product with id=9
 
+
+
