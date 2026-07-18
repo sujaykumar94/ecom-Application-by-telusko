@@ -26,4 +26,9 @@ https://chatgpt.com/s/p_6a591716937c81918168a21cfac5e7cb
 - GET productsCache::9      --To view the values in the key 9. Example: The product with id=9
 
 
+--Postgres Server issue
+Verify if postgres is ready
+"C:\Program Files\PostgreSQL\16\bin\pg_isready.exe"
 
+-Start the postgres server
+-"C:\Program Files\PostgreSQL\16\bin\pg_ctl.exe" start -D "C:\Program Files\PostgreSQL\16\data" -|"%TEMP%\postgresql.log"
